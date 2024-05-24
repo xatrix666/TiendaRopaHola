@@ -47,6 +47,35 @@ namespace TiendaRopaHola.Controllers
 
         }
 
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id != null)
+            {
+                Producto producto = await _unitWork.Producto.GetById(id.GetValueOrDefault());
+                if (producto != null)
+                {
+                    return View(producto);
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromBody] Producto producto)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingProducto = await _unitWork.Producto.GetById(producto.Id);
+                if (existingProducto != null)
+                {
+                    _unitWork.Producto.Update(producto);
+                    await _unitWork.Save();
+                    return Json(new { success = true, message = "Producto actualizado correctamente" });
+                }
+            }
+            return Json(new { success = false, message = "Error al crear Producto" });
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
