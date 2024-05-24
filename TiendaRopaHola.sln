@@ -5,6 +5,10 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaRopaHola", "TiendaRopaHola\TiendaRopaHola.csproj", "{D7569C16-D311-4051-AFCB-E05D2A86211D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaRopaHola.Data", "TiendaRopaHola.Data\TiendaRopaHola.Data.csproj", "{D4441403-2DDC-48AF-B39F-C7D819804C62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaRopaHola.Models", "TiendaRopaHola.Models\TiendaRopaHola.Models.csproj", "{B6A78BAF-8A83-4D98-ADC5-3BC47C8C2210}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D7569C16-D311-4051-AFCB-E05D2A86211D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7569C16-D311-4051-AFCB-E05D2A86211D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7569C16-D311-4051-AFCB-E05D2A86211D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4441403-2DDC-48AF-B39F-C7D819804C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4441403-2DDC-48AF-B39F-C7D819804C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4441403-2DDC-48AF-B39F-C7D819804C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4441403-2DDC-48AF-B39F-C7D819804C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6A78BAF-8A83-4D98-ADC5-3BC47C8C2210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A78BAF-8A83-4D98-ADC5-3BC47C8C2210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A78BAF-8A83-4D98-ADC5-3BC47C8C2210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A78BAF-8A83-4D98-ADC5-3BC47C8C2210}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
