@@ -55,3 +55,45 @@ function loadDataTable() {
         "pageLength": 3
     });
 }
+
+function Upsert() {
+    var producto = GetProductoForm();
+    var url = "/Producto/Insert";
+    if (producto.Id != null && producto.Id != 0)
+        url = "/Producto/Update";
+    var options = {
+        contentType: "application/json; charset=utf-8",
+        url: url,
+        data: JSON.stringify(producto),
+        type: "post",
+        datatype: "json",
+        success: function (result) {
+            if (result.success) {
+                toastr.success(result.message);
+                setTimeout(function () {
+                    window.location.href = "/Producto/Index";
+                }, 1000);
+            }
+            else {
+                toastr.error(result.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    };
+
+    $.ajax(options);
+}
+
+function GetProductoForm() {
+    var producto = {
+        Id: $("#Id").val(),
+        Nombre: $("#Nombre").val(),
+        Descripcion: $("#Descripcion").val(),
+        Talla: $("#Talla").val(),
+        Color: $("#Color").val(),
+        Precio: $("#precioInput").val()
+    };
+    return producto;
+}

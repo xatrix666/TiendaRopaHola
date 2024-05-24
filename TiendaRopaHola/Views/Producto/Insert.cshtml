@@ -1,0 +1,83 @@
+﻿@model TiendaRopaHola.Models.Producto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear Nuevo Producto";
+}
+
+<form method="post" id="InsertForm">
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nombre</label>
+                            <input asp-for="Nombre" class="form-control" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripcion</label>
+                            <input asp-for="Descripcion" class="form-control" />
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Talla</label>
+                            <input asp-for="Talla" class="form-control" />
+                            <span asp-validation-for="Talla" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Color</label>
+                            <input asp-for="Color" class="form-control" />
+                            <span asp-validation-for="Color" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Precio</label>
+                            <input asp-for="Precio" id="precioInput" class="form-control" />
+                            <span asp-validation-for="Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        <div class="d-grid gap-2 d-md-block">
+                            <button type="button" class="btn btn-primary" onfocus="false" onclick="Upsert()">
+                                <i class="bi bi-plus-square-fill"></i>
+                                Crear
+                            </button>
+                            <a asp-action="Index" class="btn btn-success">
+                                <i class="bi bi-arrow-return-left"></i>
+                                Volver
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/producto.js"></script>
+
+}

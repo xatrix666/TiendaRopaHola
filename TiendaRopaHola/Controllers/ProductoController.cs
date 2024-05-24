@@ -19,12 +19,32 @@ namespace TiendaRopaHola.Controllers
             return View();
         }
 
+        public IActionResult Insert()
+        {
+            return View(new Producto());
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var all = await _unitWork.Producto.GetAll();
             return Json(new { data = all });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Insert([FromBody] Producto producto)
+        {
+            if (ModelState.IsValid)
+            {
+                if (producto != null)
+                {
+                    await _unitWork.Producto.Add(producto);
+                    await _unitWork.Save();
+                    return Json(new { success = true, message = "Producto creado correctamente" });
+                }
+            }
+            return Json(new { success = false, message = "Error al crear Producto" });
+
         }
 
         public IActionResult Error()
