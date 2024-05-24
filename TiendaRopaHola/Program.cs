@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TiendaRopaHola.Data.Data;
+using TiendaRopaHola.Data.Inicializator;
 using TiendaRopaHola.Data.Repositories.IRepository;
 using TiendaRopaHola.Data.Repositories.Repository;
 
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddScoped<IUnitWork, UnitWork>();
+builder.Services.AddScoped<IDbInicializador, DbInicializador>();
 
 var app = builder.Build();
 
@@ -29,6 +31,22 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+    try
+    {
+        var inicializador = services.GetRequiredService<IDbInicializador>();
+        inicializador.Inicializar();
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "Un Error ocurrio al ejecutar la migracion");
+    }
+}
 
 app.MapControllerRoute(
     name: "default",
