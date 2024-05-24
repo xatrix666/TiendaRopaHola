@@ -76,6 +76,20 @@ namespace TiendaRopaHola.Controllers
             return Json(new { success = false, message = "Error al crear Producto" });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var productoDb = await _unitWork.Producto.GetById(id);
+            if (productoDb == null)
+            {
+                return Json(new { success = false, message = "Error al borrar Producto" });
+            }
+
+            _unitWork.Producto.Remove(productoDb);
+            await _unitWork.Save();
+            return Json(new { success = true, message = "Producto borrado correctamente" });
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

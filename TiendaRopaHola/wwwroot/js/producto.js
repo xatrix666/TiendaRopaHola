@@ -86,6 +86,32 @@ function Upsert() {
     $.ajax(options);
 }
 
+function Delete(url) {
+    swal({
+        title: "Esta seguro de Eliminar el Producto?",
+        text: "Este registro no podra ser rcuperado.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((borrar) => {
+        if (borrar) {
+            $.ajax({
+                method: "POST",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        datatable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            })
+        }
+    });
+}
+
 function GetProductoForm() {
     var producto = {
         Id: $("#Id").val(),
