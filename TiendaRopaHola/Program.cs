@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TiendaRopaHola.Data.Data;
+using TiendaRopaHola.Data.Repositories.IRepository;
+using TiendaRopaHola.Data.Repositories.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IUnitWork, UnitWork>();
 
 var app = builder.Build();
 
@@ -25,7 +29,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
