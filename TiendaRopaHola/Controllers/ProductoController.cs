@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Diagnostics;
 using TiendaRopaHola.Data.Repositories.IRepository;
 using TiendaRopaHola.Models;
@@ -19,77 +20,101 @@ namespace TiendaRopaHola.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("Producto/GetAll")]
+        [SwaggerOperation(Summary = "Obtiene todos los productos", Description = "Obtener todos los productos")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Producto/s listados correctamente.")]
+
+        public async Task<IActionResult> GetAll()
+        {
+            IEnumerable<Producto> all = await _unitWork.Producto.GetAll();
+            return Ok(new { data = all });
+        }
+
+        [HttpGet]
         public IActionResult Insert()
         {
             return View(new Producto());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var all = await _unitWork.Producto.GetAll();
-            return Json(new { data = all });
-        }
-
         [HttpPost]
+        [Route("Producto/Insert")]
+        [SwaggerOperation(Summary = "CrearProducto", Description = "Crea un nuevo producto.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Producto creado.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Modelo inválido.")]
         public async Task<IActionResult> Insert([FromBody] Producto producto)
         {
-            if (ModelState.IsValid)
+            if (producto == null || !ModelState.IsValid)
             {
-                if (producto != null)
-                {
-                    await _unitWork.Producto.Add(producto);
-                    await _unitWork.Save();
-                    return Json(new { success = true, message = "Producto creado correctamente" });
-                }
+                return BadRequest(new { success = false, message = "Error al crear Producto" });
             }
-            return Json(new { success = false, message = "Error al crear Producto" });
 
+            await _unitWork.Producto.Add(producto);
+            await _unitWork.Save();
+            return Ok(new { success = true, message = "Producto creado correctamente" });
         }
 
+        [HttpGet]
         public async Task<IActionResult> Update(int? id)
         {
-            if (id != null)
+            if (id == null)
             {
-                Producto producto = await _unitWork.Producto.GetById(id.GetValueOrDefault());
-                if (producto != null)
-                {
-                    return View(producto);
-                }
+                return BadRequest();
             }
-            return BadRequest();
+
+            Producto producto = await _unitWork.Producto.GetById(id.GetValueOrDefault());
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return View(producto);
         }
 
-        [HttpPost]
+        [HttpPut]
+        [Route("Producto/Update")]
+        [SwaggerOperation(Summary = "ActualizarProducto", Description = "Actualiza un producto.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Producto actualizado.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Modelo inválido.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Producto no encontrado.")]
         public async Task<IActionResult> Update([FromBody] Producto producto)
         {
-            if (ModelState.IsValid)
+            if (producto == null || !ModelState.IsValid)
             {
-                var existingProducto = await _unitWork.Producto.GetById(producto.Id);
-                if (existingProducto != null)
-                {
-                    _unitWork.Producto.Update(producto);
-                    await _unitWork.Save();
-                    return Json(new { success = true, message = "Producto actualizado correctamente" });
-                }
+                return BadRequest(new { success = false, message = "Error al actualizar Producto" });
             }
-            return Json(new { success = false, message = "Error al crear Producto" });
+
+            var existingProducto = await _unitWork.Producto.GetById(producto.Id);
+            if (existingProducto == null)
+            {
+                return NotFound(new { success = false, message = "Producto no encontrado." });
+            }
+
+            _unitWork.Producto.Update(producto);
+            await _unitWork.Save();
+            return Ok(new { success = true, message = "Producto actualizado correctamente" });
         }
 
-        [HttpPost]
+        [HttpDelete]
+        [Route("Producto/Delete/{id}")]
+        [SwaggerOperation(Summary = "EliminarProducto", Description = "Elimina un producto.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Producto eliminado.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Modelo inválido.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Producto no encontrado.")]
         public async Task<IActionResult> Delete(int id)
         {
             var productoDb = await _unitWork.Producto.GetById(id);
             if (productoDb == null)
             {
-                return Json(new { success = false, message = "Error al borrar Producto" });
+                return NotFound(new { success = false, message = "Producto no encontrado." });
             }
 
             _unitWork.Producto.Remove(productoDb);
             await _unitWork.Save();
-            return Json(new { success = true, message = "Producto borrado correctamente" });
+            return Ok(new { success = true, message = "Producto borrado correctamente" });
         }
 
+        [HttpGet]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

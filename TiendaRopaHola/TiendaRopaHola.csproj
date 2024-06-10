@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\css\custom.css" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
@@ -14,11 +18,23 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.6.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\TiendaRopaHola.Data\TiendaRopaHola.Data.csproj" />
 		<ProjectReference Include="..\TiendaRopaHola.Models\TiendaRopaHola.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\css\images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\css\images\maniqui.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>

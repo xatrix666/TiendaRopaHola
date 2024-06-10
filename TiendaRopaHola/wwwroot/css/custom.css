@@ -1,0 +1,80 @@
+﻿.swagger-container {
+    height: 100vh;
+}
+
+.swagger-ui {
+    background-image: url('/css/images/maniqui.png');
+    background-size: cover;
+    background-repeat: repeat-y !important;
+    background-attachment: fixed;
+}
+    
+.swagger-ui .topbar {
+    background-color: #222;
+    color: #fff;
+}
+    
+.swagger-ui, .swagger-ui * {
+    color: #fff; 
+    font-family: 'Comic Sans MS', cursive, sans-serif; 
+}
+        
+.swagger-ui .opblock-tag {
+    background-color: #555; 
+    color: #fff; 
+}
+
+.swagger-ui .opblock-summary {
+    background-color: #444;
+    color: #fff; 
+    border-radius: 5px 5px 0 0;
+}
+
+.swagger-ui .opblock-body {
+    background-color: #ddd; 
+}
+
+
+.swagger-ui .opblock-description-wrapper p {
+    color: #666 !important; 
+    font-size: 14px; 
+    font-family: Arial, sans-serif; 
+    line-height: 1.5; 
+    background-color: #f8f8f8;
+    padding: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ddd;
+}
+
+.swagger-ui .btn {
+    background-color: #333; 
+    color: #fff; 
+    border-color: #333;
+}
+
+.swagger-ui .btn.try-out__btn {
+    background-color: #666; 
+    color: #fff; 
+}
+
+.swagger-ui .execute-wrapper .btn {
+    background-color: #666;
+    color: #fff; 
+}
+
+.swagger-ui .info p {
+    color: #fff; 
+}
+
+.swagger-ui select {
+    background-color: #ddd; 
+}
+
+.swagger-ui .info .title {
+    font-family: 'Comic Sans MS', cursive, sans-serif; 
+    color:#fff
+}
+
+#logo_small_svg__SW_TM-logo-on-dark {
+    display: none;
+}

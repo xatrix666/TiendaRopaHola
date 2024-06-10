@@ -59,13 +59,16 @@ function loadDataTable() {
 function Upsert() {
     var producto = GetProductoForm();
     var url = "/Producto/Insert";
-    if (producto.Id != null && producto.Id != 0)
+    var type = 'POST';
+    if (producto.Id != null && producto.Id != 0) {
         url = "/Producto/Update";
+        type = 'PUT';
+    }
     var options = {
         contentType: "application/json; charset=utf-8",
         url: url,
         data: JSON.stringify(producto),
-        type: "post",
+        type: type,
         datatype: "json",
         success: function (result) {
             if (result.success) {
@@ -79,7 +82,12 @@ function Upsert() {
             }
         },
         error: function (xhr, status, error) {
-            console.log(error);
+            if (xhr.status === 404 || xhr.status === 400) {
+                var response = JSON.parse(xhr.responseText);
+                toastr.error(response.message);
+            } else {
+                console.error(xhr.responseText);
+            };
         }
     };
 
@@ -88,26 +96,33 @@ function Upsert() {
 
 function Delete(url) {
     swal({
-        title: "Esta seguro de Eliminar el Producto?",
-        text: "Este registro no podra ser rcuperado.",
+        title: "¿Está seguro de eliminar el producto?",
+        text: "Este registro no podrá ser recuperado.",
         icon: "warning",
         buttons: true,
         dangerMode: true
     }).then((borrar) => {
         if (borrar) {
             $.ajax({
-                method: "POST",
                 url: url,
+                type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
                         datatable.ajax.reload();
-                    }
-                    else {
+                    } else {
                         toastr.error(data.message);
                     }
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 404 || xhr.status === 400) {
+                        var response = JSON.parse(xhr.responseText);
+                        toastr.error(response.message);
+                    } else {
+                        console.error(xhr.responseText);
+                    };
                 }
-            })
+            });
         }
     });
 }
