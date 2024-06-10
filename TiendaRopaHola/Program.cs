@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using TiendaRopaHola.Data.Data;
+using TiendaRopaHola.Data.Inicializator;
 using TiendaRopaHola.Data.Repositories.IRepository;
 using TiendaRopaHola.Data.Repositories.Repository;
 
@@ -47,6 +48,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<IUnitWork, UnitWork>();
+builder.Services.AddScoped<IDbInicializador, DbInicializador>();
 
 var app = builder.Build();
 
